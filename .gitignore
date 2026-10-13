@@ -1,0 +1,7 @@
+node_modules/
+www/
+__pycache__/
+*.copy.mjs
+.env
+.DS_Store
+public/_mock/

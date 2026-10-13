@@ -1,0 +1,2 @@
+# Google AdSense: when AdSense approves floor2rafters.com, replace this whole file with the one line AdSense gives you, like:
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

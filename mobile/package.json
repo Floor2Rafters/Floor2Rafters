@@ -1,0 +1,35 @@
+{
+  "name": "floor-2-rafters-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Floor 2 Rafters for iPhone and Android: the website in public/ wrapped with Capacitor.",
+  "scripts": {
+    "web": "node scripts/copy-web.mjs",
+    "icons": "npx @capacitor/assets generate --iconBackgroundColor '#07080F' --iconBackgroundColorDark '#07080F' --splashBackgroundColor '#07080F' --splashBackgroundColorDark '#07080F'",
+    "native": "node scripts/native-config.mjs",
+    "add:android": "npm run web && npx cap add android && npm run icons -- --android && npm run native && npx cap sync android",
+    "add:ios": "npm run web && npx cap add ios && npm run icons -- --ios && npm run native && npx cap sync ios",
+    "setup": "npm run add:ios && npm run add:android",
+    "sync": "npm run web && npm run native && npx cap sync",
+    "ios": "npm run sync && npx cap open ios",
+    "android": "npm run sync && npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/filesystem": "^7.0.0",
+    "@capacitor/haptics": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/push-notifications": "^7.0.0",
+    "@capacitor/share": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0",
+    "@supabase/supabase-js": "2.45.4",
+    "sortablejs": "1.15.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}

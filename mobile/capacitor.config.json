@@ -1,0 +1,12 @@
+{
+  "appId": "com.floor2rafters.app",
+  "appName": "Floor 2 Rafters",
+  "webDir": "www",
+  "backgroundColor": "#07080F",
+  "ios": { "contentInset": "never", "backgroundColor": "#07080F" },
+  "android": { "backgroundColor": "#07080F" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 3000, "launchAutoHide": false, "backgroundColor": "#07080F", "showSpinner": false },
+    "StatusBar": { "style": "DARK", "backgroundColor": "#07080F", "overlaysWebView": false }
+  }
+}

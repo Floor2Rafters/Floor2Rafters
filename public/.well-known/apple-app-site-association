@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["APPLE_TEAM_ID.com.floor2rafters.app"],
+        "components": [{ "/": "/join/*", "comment": "Group invite links open the app" }]
+      }
+    ]
+  }
+}
