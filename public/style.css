@@ -823,3 +823,12 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 .hm-vis{height:200px}
 .v2{gap:8px}.v2 .ml span{padding:5px 10px}.v2 .ml span:nth-child(4){display:none}
 .v1 .tap{left:auto;right:calc(50% + 34px);top:auto;bottom:34px;width:18px;height:18px}
+
+/* first top 10 celebration */
+.f10 .hero{margin:6px 0 2px}
+.f10-top{list-style:none;margin:6px 0 4px;padding:0;display:flex;flex-direction:column;gap:6px}
+.f10-top li{display:flex;align-items:center;gap:14px;padding:10px 14px;background:linear-gradient(90deg,color-mix(in srgb,var(--tc) 28%,var(--row)),var(--row) 60%);box-shadow:inset 5px 0 0 var(--tc)}
+.f10-top b{font-family:var(--display);font-weight:800;font-size:28px;color:var(--blue);width:22px}
+.f10-top span{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.f10-top i{font-style:normal;font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--dim)}
+.f10 .btn+.btn{margin-top:8px}

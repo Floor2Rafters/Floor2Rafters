@@ -10,7 +10,8 @@ const players=JSON.parse(fs.readFileSync(path.join(root,'players.json')));
 let fails=0;const ok=(name,cond,extra)=>{console.log((cond?'PASS ':'FAIL ')+name+(extra!==undefined?'  ('+extra+')':''));if(!cond)fails++;};
 (async()=>{
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});const errs=[];
-async function page(mock,cfg,seen,url){global.CFG=cfg||null;const ctx=await b.newContext({viewport:{width:390,height:844},acceptDownloads:true});const p=await ctx.newPage();
+const DEMO_CFG='window.F2R_CONFIG={supabaseUrl:"",supabaseAnonKey:"",google:true,statsLabel:"2025-26 regular season",sponsor:null,pro:null};';
+async function page(mock,cfg,seen,url){global.CFG=cfg||DEMO_CFG;const ctx=await b.newContext({viewport:{width:390,height:844},acceptDownloads:true});const p=await ctx.newPage();
   p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/Failed to load resource/.test(m.text()))errs.push('console: '+m.text());});
   await p.route(/fonts\.g|cdnjs/,r=>r.abort());
   const mockSrc=fs.readFileSync(path.join(__dirname,'mock_supabase.js'),'utf8');
@@ -29,6 +30,8 @@ ok('start goes to Pick PG',(await p.textContent('.tb[aria-pressed=true]'))==='PG
 const order1=await p.$$eval('.pc .pn',x=>x.map(e=>e.textContent).join('|'));
 let n=0;while((await filled(p))<10&&n<80){await p.click('.pc[data-side='+(n%3?'a':'b')+']');n++;}
 ok('PG top 10 fills, list visible while picking',(await filled(p))===10,n+' taps');
+ok('first top 10 asks to share or challenge',!!(await p.$('.f10 [data-f10share]'))&&!!(await p.$('.f10 [data-f10dare]'))&&(await p.$$eval('.f10-top li',x=>x.length))===3,(await p.$('.f10'))?'sheet':'no sheet');
+await p.click('.f10 [data-f10share]');ok('share from the celebration opens the image sizes',!!(await p.$('[data-sharesize=story]')));await p.click('.sheet-card [data-close]');
 ok('lock-in offered once top 10 is set',!!(await p.$('[data-lock]')));
 for(let i=0;i<14&&(await filled(p))<12;i++)await p.click('.pc[data-side=a]');
 ok('list keeps growing past 10',(await filled(p))>=11,(await filled(p))+' on the list');
@@ -224,7 +227,7 @@ await p.context().close();
 
 // 7) phone app: back button and invite links that open the app
 {const ctx=await b.newContext({viewport:{width:390,height:844}});const q=await ctx.newPage();q.on('pageerror',e=>errs.push(e.message));
- await q.route(/fonts\.g|cdnjs|jsdelivr/,r=>r.abort());global.CFG=null;
+ await q.route(/fonts\.g|cdnjs|jsdelivr/,r=>r.abort());global.CFG=DEMO_CFG;
  await q.addInitScript(()=>{window.__noAnim=true;localStorage.setItem('f2r-seen','1');window.__noAnim=true;window.__L={};window.__exit=0;
   window.Capacitor={isNativePlatform:()=>true,Plugins:{App:{addListener:(n,f)=>{window.__L[n]=f;},exitApp:()=>{window.__exit++;}},Haptics:{impact(){}},StatusBar:{setStyle(){}},SplashScreen:{hide(){}}}};});
  await q.goto('http://localhost:8765/');await q.waitForTimeout(900);if(await q.$('.reveal'))await q.click('.reveal [data-close] >> nth=0');
@@ -284,7 +287,8 @@ await p.context().close();
  ok('pick flash: winner lights up',await p.evaluate(()=>!!document.querySelector('.pc.win')&&!!document.querySelector('.pc.lose')));
  await p.waitForTimeout(450);await p.evaluate(()=>{window.__noAnim=true;});
  ok('after-pick bar: just the fans line (no undo, no share)',!!(await p.$('#after:not([hidden]) #ag'))&&!(await p.$('#after button'))&&((await p.textContent('#ag'))||'').length>3,await p.textContent('#ag'));
- let k=0;while(!(await p.$('[data-lock]'))&&!(await p.$('.locked'))&&k<120){await p.click('.pc[data-side=a]');k++;}
+ let k=0;while(!(await p.$('[data-lock]'))&&!(await p.$('.locked'))&&k<120){if(await p.$('.f10'))await p.evaluate(()=>document.querySelector('.f10 .link[data-close]').click());await p.click('.pc[data-side=a]');k++;}
+ if(await p.$('.f10'))await p.evaluate(()=>document.querySelector('.f10 .link[data-close]').click());
  if(await p.$('[data-lock]'))await p.click('[data-lock]');await p.waitForTimeout(100);
  ok('locked list hangs in',(await p.$$eval('.locked ~ .list .r.mini.hang',x=>x.length))>=10);
  const [sdl]=await Promise.all([p.waitForEvent('download',{timeout:8000}).catch(()=>null),(async()=>{await p.click('[data-share]');await p.click('[data-sharesize=story]');})()]);
@@ -299,7 +303,7 @@ await p.context().close();
  const rows=await q.$$eval('.list .r[data-pid]',rs=>rs.map(r=>[+r.dataset.pid,parseInt(r.querySelector('.n').textContent,10)]));const risers=rows.slice(10,13).map(x=>x[0]);const then={};rows.slice(10,13).forEach(x=>{then[x[0]]=x[1]+6;});
  await q.context().close();
  const ids=risers.slice(0,3);
- const ctx=await b.newContext({viewport:{width:390,height:844}});q=await ctx.newPage();q.on('pageerror',e=>errs.push(e.message));await q.route(/fonts\.g|cdnjs|jsdelivr/,r=>r.abort());global.CFG=null;
+ const ctx=await b.newContext({viewport:{width:390,height:844}});q=await ctx.newPage();q.on('pageerror',e=>errs.push(e.message));await q.route(/fonts\.g|cdnjs|jsdelivr/,r=>r.abort());global.CFG=DEMO_CFG;
  await q.addInitScript(a=>{const ids=a[0];window.__noAnim=true;localStorage.setItem('f2r-seen','1');localStorage.setItem('f2r-guest-v1',JSON.stringify({l:{pg:ids},out:{},deep:{},xp:0,streak:0,last:'',snap:{pg:{w:'2000-01-03',ids:ids,r:a[1]}}}));},[ids,then]);
  await q.goto('http://localhost:8765/');await q.waitForTimeout(800);await q.keyboard.press('Escape');await q.waitForTimeout(100);await q.click('[data-tab=pg]');await q.waitForTimeout(400);
  const t=await q.textContent('#toast');ok('called it on a new board',ids.length>0&&/Called it/.test(t),ids.length+' risers · '+t);
@@ -318,7 +322,7 @@ await p.context().close();
  await p.click('nav.nav [data-nav=me]');ok('admin numbers hidden for fans',!(await p.$('.menu [data-nav=admin]')));await p.context().close();}
 
 // 12) design details: court icons, rank roll, pull to refresh, jersey numbers fall back to team code
-{const ctx=await b.newContext({viewport:{width:390,height:844},hasTouch:true});const q=await ctx.newPage();q.on('pageerror',e=>errs.push(e.message));await q.route(/fonts\.g|cdnjs|jsdelivr/,r=>r.abort());global.CFG=null;
+{const ctx=await b.newContext({viewport:{width:390,height:844},hasTouch:true});const q=await ctx.newPage();q.on('pageerror',e=>errs.push(e.message));await q.route(/fonts\.g|cdnjs|jsdelivr/,r=>r.abort());global.CFG=DEMO_CFG;
  await q.addInitScript(()=>{window.__noAnim=true;localStorage.setItem('f2r-seen','1');window.__ptr=true;});
  await q.goto('http://localhost:8765/');await q.waitForTimeout(800);await q.keyboard.press('Escape');await q.waitForTimeout(100);
  ok('no position icons on the tabs',(await q.$$eval('.tabs .tb .ct',x=>x.length))===0);

@@ -118,12 +118,12 @@ function h2hPick(candWins){haptic();var h=ui.h2h;if(h.rc)return rcPick(candWins)
     if(L.length>C){var d=L.pop();me.out[key].push(d);msg+=" "+P[d].n+" drops out.";}
     ui.fly=ui.fly.filter(function(f){if(f.hi>L.length)f.hi=L.length;if(L.length>=C){f.full=true;if(f.hi>C)f.hi=C;}
       if(f.full&&f.lo>=C){me.out[key].push(f.cand);return false;}return true;});
-    if(before<PICK&&L.length>=PICK){gainXP(25);msg="Your "+POSL[key]+" top 10 is set! Keep picking to add #11 and up, or lock it in.";}
+    if(before<PICK&&L.length>=PICK){gainXP(25);msg="Your "+POSL[key]+" top 10 is set! Keep picking to add #11 and up, or lock it in.";if(firstTen())ui.first10=key;}
   }
   changed();
   while(ui.fly.length<2){var nc=nextCand(key);if(nc==null)break;ui.fly.push(flight(key,nc));}
   if(!ui.fly.length){ui.h2h=null;ui.hang=key;toast("Every "+POSL[key]+" checked. Your list is locked in.");render();return;}
-  ui.h2h=ui.fly[0];h2hMid();if(msg)toast(msg);render();}
+  ui.h2h=ui.fly[0];h2hMid();if(ui.first10){var fk=ui.first10;ui.first10=null;render();ui.shareKey=fk;ui.sheet="first10";renderSheet();return;}if(msg)toast(msg);render();}
 function next(key){h2hStart(key);if(!ui.h2h&&!waiting(key).length)toast(key==="overall"?(me.l.overall.length>=DEEP?"Your overall top 50 is set!":"Everyone you've picked so far is ranked."):"Every "+POSL[key]+" checked. Your list is locked in.");render();}
 function h2hSkip(){var h=ui.h2h,key=h.key;me.out[key].push(h.cand);ui.fly=(ui.fly||[]).filter(function(f){return f!==h;});changed();
   var nc=nextCand(key);if(nc!=null)ui.fly.push(flight(key,nc));ui.h2h=ui.fly[0]||null;if(ui.h2h)h2hMid();render();}
@@ -789,10 +789,13 @@ function renderSheet(){
   else if(ui.sheet==="pushask")el.innerHTML=pushAskHTML();
   else if(ui.sheet==="pro")el.innerHTML=proHTML();
   else if(ui.sheet==="sharepick")el.innerHTML=sharePickHTML();
+  else if(ui.sheet==="first10")el.innerHTML=first10HTML();
   else if(ui.sheet==="gjoin")el.innerHTML=gJoinHTML();
   el.onclick=function(e){if(e.target===el){ui.sheet=null;renderSheet();}};
   wireGroupSheets(el);
   el.querySelectorAll("[data-sharesize]").forEach(function(b){b.onclick=function(){var k=ui.shareKey;ui.sheet=null;renderSheet();shareCard(k,b.dataset.sharesize);};});
+  var f1=$("[data-f10share]",el);if(f1)f1.onclick=function(){ui.sheet="sharepick";renderSheet();};
+  var f2=$("[data-f10dare]",el);if(f2)f2.onclick=function(){dareFriend(ui.shareKey);};
   if(ui.sheet==="pushask")try{localStorage.setItem("f2r-pushask","1");}catch(e){}
   var py=$("[data-pushyes]",el);if(py)py.onclick=function(){ui.sheet=null;renderSheet();pushSetup(true);};
   el.querySelectorAll("[data-pkey]").forEach(function(b){b.onclick=function(){ensureBoard(b.dataset.pkey);makePosts(b.dataset.pkey);};});
@@ -1447,6 +1450,20 @@ function sponsorSummary(){if(!ADM||ADM.error)return "";var W=ADM.weeks||[],c=W[W
     fmt(ADM.board_voters||0)+" fans' lists are on the live Fan Board."+(ADM.sponsor_views?" Sponsor spot, last 7 days: "+fmt(ADM.sponsor_views)+" views, "+fmt(ADM.sponsor_taps)+" taps.":"")+(ADM.sample?" (SAMPLE NUMBERS)":"");}
 function wireAdmin(app){var b=$("[data-adcopy]",app);if(!b)return;b.onclick=function(){var t=$("#adsum",app).value;
   try{navigator.clipboard.writeText(t).then(function(){toast("Summary copied.");},function(){$("#adsum",app).select();toast("Summary selected. Copy it.");});}catch(e){$("#adsum",app).select();}};}
+
+// First top 10 ever: celebrate and ask the fan to share it or challenge a friend (fans bring fans).
+function firstTen(){var n=0;TABS.forEach(function(t){var k=t[0];if(k!=="overall"&&me.l[k].length>=PICK)n++;});return n===1;}
+function first10HTML(){var k=ui.shareKey||"pg",nm=isGoat(k)?"all-time":POSL[k],L=me.l[k].slice(0,3);
+  return '<div class="sheet-card f10" role="dialog" aria-modal="true" aria-labelledby="f10-t"><button class="x" data-close aria-label="Close">×</button>'+
+  '<span class="kicker blue">+25 XP · First top 10</span><h2 id="f10-t" class="hero">Your '+esc(nm)+'<br>top 10 is set.</h2>'+
+  '<ol class="f10-top">'+L.map(function(id,i){var p=P[id];return '<li style="--tc:'+(TC[p.t]||"#8B5CF6")+'"><b>'+(i+1)+'</b><span>'+esc(p.n)+'</span><i>'+esc(p.t||"")+'</i></li>';}).join("")+'</ol>'+
+  '<p class="sub">It counts on the Fan Board now. Think your friends would get it wrong? Prove it.</p>'+
+  '<button class="btn" data-f10share>Share my top 10</button><button class="btn tint" data-f10dare>Challenge a friend</button>'+
+  '<button class="link center" data-close>Keep picking</button></div>';}
+async function dareFriend(k){var nm=isGoat(k)?"all-time":POSL[k],url="https://floor2rafters.com/",
+  text="I just set my "+nm+" top 10 on Floor 2 Rafters. Bet yours is worse. Rank yours:";
+  if(navigator.share){try{await navigator.share({title:"Floor 2 Rafters",text:text,url:url});return;}catch(e){if(e&&e.name==="AbortError")return;}}
+  try{await navigator.clipboard.writeText(text+" "+url);toast("Link copied. Send it to a friend.");}catch(e){toast("Send them to floor2rafters.com");}}
 
 /* ---------- design details: rolls, flicker, spotlight, court icons, pull to refresh ---------- */
 // Big moments take turns: the Jumbotron flicker, the #1 reveal and a level-up never play on top of each other.

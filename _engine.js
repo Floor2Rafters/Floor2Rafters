@@ -58,12 +58,12 @@ function h2hPick(candWins){haptic();var h=ui.h2h;if(h.rc)return rcPick(candWins)
     if(L.length>C){var d=L.pop();me.out[key].push(d);msg+=" "+P[d].n+" drops out.";}
     ui.fly=ui.fly.filter(function(f){if(f.hi>L.length)f.hi=L.length;if(L.length>=C){f.full=true;if(f.hi>C)f.hi=C;}
       if(f.full&&f.lo>=C){me.out[key].push(f.cand);return false;}return true;});
-    if(before<PICK&&L.length>=PICK){gainXP(25);msg="Your "+POSL[key]+" top 10 is set! Keep picking to add #11 and up, or lock it in.";}
+    if(before<PICK&&L.length>=PICK){gainXP(25);msg="Your "+POSL[key]+" top 10 is set! Keep picking to add #11 and up, or lock it in.";if(firstTen())ui.first10=key;}
   }
   changed();
   while(ui.fly.length<2){var nc=nextCand(key);if(nc==null)break;ui.fly.push(flight(key,nc));}
   if(!ui.fly.length){ui.h2h=null;ui.hang=key;toast("Every "+POSL[key]+" checked. Your list is locked in.");render();return;}
-  ui.h2h=ui.fly[0];h2hMid();if(msg)toast(msg);render();}
+  ui.h2h=ui.fly[0];h2hMid();if(ui.first10){var fk=ui.first10;ui.first10=null;render();ui.shareKey=fk;ui.sheet="first10";renderSheet();return;}if(msg)toast(msg);render();}
 function next(key){h2hStart(key);if(!ui.h2h&&!waiting(key).length)toast(key==="overall"?(me.l.overall.length>=DEEP?"Your overall top 50 is set!":"Everyone you've picked so far is ranked."):"Every "+POSL[key]+" checked. Your list is locked in.");render();}
 function h2hSkip(){var h=ui.h2h,key=h.key;me.out[key].push(h.cand);ui.fly=(ui.fly||[]).filter(function(f){return f!==h;});changed();
   var nc=nextCand(key);if(nc!=null)ui.fly.push(flight(key,nc));ui.h2h=ui.fly[0]||null;if(ui.h2h)h2hMid();render();}

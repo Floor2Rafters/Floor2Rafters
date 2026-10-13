@@ -293,10 +293,13 @@ function renderSheet(){
   else if(ui.sheet==="pushask")el.innerHTML=pushAskHTML();
   else if(ui.sheet==="pro")el.innerHTML=proHTML();
   else if(ui.sheet==="sharepick")el.innerHTML=sharePickHTML();
+  else if(ui.sheet==="first10")el.innerHTML=first10HTML();
   else if(ui.sheet==="gjoin")el.innerHTML=gJoinHTML();
   el.onclick=function(e){if(e.target===el){ui.sheet=null;renderSheet();}};
   wireGroupSheets(el);
   el.querySelectorAll("[data-sharesize]").forEach(function(b){b.onclick=function(){var k=ui.shareKey;ui.sheet=null;renderSheet();shareCard(k,b.dataset.sharesize);};});
+  var f1=$("[data-f10share]",el);if(f1)f1.onclick=function(){ui.sheet="sharepick";renderSheet();};
+  var f2=$("[data-f10dare]",el);if(f2)f2.onclick=function(){dareFriend(ui.shareKey);};
   if(ui.sheet==="pushask")try{localStorage.setItem("f2r-pushask","1");}catch(e){}
   var py=$("[data-pushyes]",el);if(py)py.onclick=function(){ui.sheet=null;renderSheet();pushSetup(true);};
   el.querySelectorAll("[data-pkey]").forEach(function(b){b.onclick=function(){ensureBoard(b.dataset.pkey);makePosts(b.dataset.pkey);};});

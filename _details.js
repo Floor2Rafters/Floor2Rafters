@@ -136,3 +136,17 @@ function sponsorSummary(){if(!ADM||ADM.error)return "";var W=ADM.weeks||[],c=W[W
     fmt(ADM.board_voters||0)+" fans' lists are on the live Fan Board."+(ADM.sponsor_views?" Sponsor spot, last 7 days: "+fmt(ADM.sponsor_views)+" views, "+fmt(ADM.sponsor_taps)+" taps.":"")+(ADM.sample?" (SAMPLE NUMBERS)":"");}
 function wireAdmin(app){var b=$("[data-adcopy]",app);if(!b)return;b.onclick=function(){var t=$("#adsum",app).value;
   try{navigator.clipboard.writeText(t).then(function(){toast("Summary copied.");},function(){$("#adsum",app).select();toast("Summary selected. Copy it.");});}catch(e){$("#adsum",app).select();}};}
+
+// First top 10 ever: celebrate and ask the fan to share it or challenge a friend (fans bring fans).
+function firstTen(){var n=0;TABS.forEach(function(t){var k=t[0];if(k!=="overall"&&me.l[k].length>=PICK)n++;});return n===1;}
+function first10HTML(){var k=ui.shareKey||"pg",nm=isGoat(k)?"all-time":POSL[k],L=me.l[k].slice(0,3);
+  return '<div class="sheet-card f10" role="dialog" aria-modal="true" aria-labelledby="f10-t"><button class="x" data-close aria-label="Close">×</button>'+
+  '<span class="kicker blue">+25 XP · First top 10</span><h2 id="f10-t" class="hero">Your '+esc(nm)+'<br>top 10 is set.</h2>'+
+  '<ol class="f10-top">'+L.map(function(id,i){var p=P[id];return '<li style="--tc:'+(TC[p.t]||"#8B5CF6")+'"><b>'+(i+1)+'</b><span>'+esc(p.n)+'</span><i>'+esc(p.t||"")+'</i></li>';}).join("")+'</ol>'+
+  '<p class="sub">It counts on the Fan Board now. Think your friends would get it wrong? Prove it.</p>'+
+  '<button class="btn" data-f10share>Share my top 10</button><button class="btn tint" data-f10dare>Challenge a friend</button>'+
+  '<button class="link center" data-close>Keep picking</button></div>';}
+async function dareFriend(k){var nm=isGoat(k)?"all-time":POSL[k],url="https://floor2rafters.com/",
+  text="I just set my "+nm+" top 10 on Floor 2 Rafters. Bet yours is worse. Rank yours:";
+  if(navigator.share){try{await navigator.share({title:"Floor 2 Rafters",text:text,url:url});return;}catch(e){if(e&&e.name==="AbortError")return;}}
+  try{await navigator.clipboard.writeText(text+" "+url);toast("Link copied. Send it to a friend.");}catch(e){toast("Send them to floor2rafters.com");}}
