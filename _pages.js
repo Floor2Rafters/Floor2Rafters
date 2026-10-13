@@ -59,7 +59,7 @@ function feedbackHTML(){
     '<p class="sub">Something broken, a player on the wrong team, or an idea? It goes straight to the person building F2R.</p>'+
     '<span class="set-h">WHAT\'S IT ABOUT?</span><div class="chips">'+FB_KINDS.map(function(x){return '<button class="chip'+(x[0]===k?' on':'')+'" data-kind="'+x[0]+'" aria-pressed="'+(x[0]===k)+'">'+x[1]+'</button>';}).join("")+'</div>'+
     '<label class="set-h" for="fbm">YOUR MESSAGE</label><textarea id="fbm" class="input fb-in" maxlength="2000" placeholder="Tatum should be an SF, not a PF...">'+esc(ui.fbText||"")+'</textarea>'+
-    '<button class="btn" data-fb-send>Send it</button><p class="note center">Or email <a href="'+esc(feedbackHref())+'">hello@floor2rafters.com</a></p>';
+    '<button class="btn" data-fb-send>Send it</button><p class="note center">Or email <a href="'+esc(feedbackHref())+'">info@floor2rafters.com</a></p>';
 }
 async function sendFeedback(){
   var t=($("#fbm")||{}).value||"";t=t.trim();if(!t){toast("Write a quick note first.");return;}

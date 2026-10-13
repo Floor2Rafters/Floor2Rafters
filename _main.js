@@ -349,7 +349,7 @@ function wireExtra(app){
   var so=$("[data-signout]",app);if(so)so.onclick=async function(){if(pushTok)try{await sb.rpc("delete_push_token",{p_token:pushTok});}catch(e){}pushTok=null;await sb.auth.signOut();};
   var del=$("[data-delete]",app);if(del)del.onclick=async function(){
     if(!del.dataset.sure){del.dataset.sure="1";del.textContent="Tap again to delete your account and all your lists";return;}
-    del.disabled=true;var r=await sb.rpc("delete_my_account");if(r&&r.error){toast("Couldn't delete. Email hello@floor2rafters.com and we'll do it.");del.disabled=false;return;}
+    del.disabled=true;var r=await sb.rpc("delete_my_account");if(r&&r.error){toast("Couldn't delete. Email info@floor2rafters.com and we'll do it.");del.disabled=false;return;}
     try{localStorage.removeItem(LS);}catch(e){}await sb.auth.signOut();toast("Your account and lists are deleted.");};
 }
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&ui.sheet){ui.sheet=null;renderSheet();}});
@@ -441,7 +441,7 @@ function mix(hex,amt){var a=parseInt(hex.slice(1),16),r=a>>16,g=a>>8&255,b=a&255
 
 /* ---------- feedback ---------- */
 function feedbackHref(){
-  var to=CFG.feedbackEmail||"hello@floor2rafters.com";
+  var to=CFG.feedbackEmail||"info@floor2rafters.com";
   var body="What happened or what would make F2R better:\n\n\n---\nScreen: "+ui.nav+" / "+(ui.nav==="board"?ui.tab:(ui.pick||ui.list||""))+(user?"\nSigned in":"\nGuest")+"\nDevice: "+navigator.userAgent;
   return "mailto:"+to+"?subject="+encodeURIComponent("F2R feedback")+"&body="+encodeURIComponent(body);
 }

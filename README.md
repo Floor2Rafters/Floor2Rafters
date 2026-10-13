@@ -41,7 +41,7 @@ With `config.js` left empty, the app runs on your device only, with no sign-in. 
 
 ### 2. Sign-in settings
 1. **Authentication → URL Configuration:** set **Site URL** to `https://floor2rafters.com`. Under **Redirect URLs** add `https://floor2rafters.com` and your Vercel address (like `https://floor-2-rafters.vercel.app`).
-2. **Email sign-in links work out of the box,** but Supabase's built-in email only sends a few emails per hour. Before launch, connect a real email sender: sign up for **Resend** (free tier), verify `floor2rafters.com`, then paste its SMTP details into **Authentication → Emails → SMTP Settings** (sender: `hello@floor2rafters.com`, name: `Floor 2 Rafters`). Resend's free plan sends 100 emails a day; switch to its $20 plan for launch week if sign-ups pass that.
+2. **Email sign-in links work out of the box,** but Supabase's built-in email only sends a few emails per hour. Before launch, connect a real email sender: sign up for **Resend** (free tier), verify `floor2rafters.com`, then paste its SMTP details into **Authentication → Emails → SMTP Settings** (sender: `info@floor2rafters.com`, name: `Floor 2 Rafters`). Resend's free plan sends 100 emails a day; switch to its $20 plan for launch week if sign-ups pass that.
 4. **Branded emails:** in **Authentication → Emails → Templates**, paste `supabase/email/magic-link.html` into **Magic Link** and `supabase/email/confirm-signup.html` into **Confirm signup** (subjects are in `supabase/email/README.txt`).
 3. **Google sign-in (optional but recommended).** In Google Cloud Console, create an **OAuth client ID** (Web application). Add the redirect URL Supabase shows under **Authentication → Providers → Google**, then paste the client ID and secret into that Supabase page and switch Google on. Until you do this, set `google: false` in `config.js` to hide the button.
 
@@ -157,5 +157,5 @@ The site already works like an app: on a phone, "Add to Home Screen" gives fans 
 - [ ] `config.js` has your keys, and sign-in works on your phone
 - [ ] A real email sender (SMTP) is connected
 - [ ] pg_cron is on, and `select * from cron.job;` shows `f2r-weekly-rankings`
-- [ ] You've read the privacy policy and terms, and `hello@floor2rafters.com` reaches you (set up forwarding where you bought the domain)
+- [ ] You've read the privacy policy and terms, and `info@floor2rafters.com` reaches you (forwarded to your Gmail)
 - [ ] No NBA or team logos anywhere; player and team names only

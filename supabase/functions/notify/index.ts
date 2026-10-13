@@ -13,7 +13,7 @@
 
 const env = (k) => (typeof Deno !== "undefined" ? Deno.env.get(k) : process.env[k]) || "";
 const SITE = () => env("SITE_URL") || "https://floor2rafters.com";
-const FROM = "Floor 2 Rafters <hello@floor2rafters.com>";
+const FROM = "Floor 2 Rafters <info@floor2rafters.com>";
 const BUNDLE = "com.floor2rafters.app";
 const enc = new TextEncoder();
 
