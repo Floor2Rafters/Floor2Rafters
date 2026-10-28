@@ -1335,11 +1335,14 @@ function doPick(candWins){var h=ui.h2h;if(!h)return;var key=h.key,opp=h2hOpp(h),
   window.__capT=[];try{h2hPick(candWins);}finally{var msgs=window.__capT||[];window.__capT=null;}showAfter(key,winner,loser,msgs[msgs.length-1]);}
 function afterEl(){var el=document.getElementById("after");if(!el){el=document.createElement("div");el.id="after";el.className="after";el.setAttribute("role","status");el.hidden=true;document.body.appendChild(el);}return el;}
 function hideAfter(){clearTimeout(afterT);afterEl().hidden=true;document.body.classList.remove("has-after");}
-function showAfter(key,winner,loser,msg){var el=afterEl(),w=P[winner];if(!w)return;
-  el.innerHTML='<span class="ag" id="ag">'+(msg?'<span class="res">'+esc(msg)+'</span>':'')+'<span id="ag2">'+(msg?'':esc(lnm(w.n))+' it is.')+'</span></span>';
-  el.hidden=false;document.body.classList.add("has-after");
-  clearTimeout(afterT);afterT=setTimeout(hideAfter,4000);
-  agreeText(key,winner,loser).then(function(t){var a=document.getElementById("ag2");if(t&&a&&!el.hidden)a.innerHTML=t;});}
+// No "<Name> it is." after every pick: the bar only shows when there's something worth saying
+// (a list message, or what the fans think of the pick).
+function showAfter(key,winner,loser,msg){var el=afterEl(),w=P[winner];if(!w)return;hideAfter();var tok=++afterTok;
+  function open(){el.hidden=false;document.body.classList.add("has-after");clearTimeout(afterT);afterT=setTimeout(hideAfter,4000);}
+  el.innerHTML='<span class="ag" id="ag">'+(msg?'<span class="res">'+esc(msg)+'</span>':'')+'<span id="ag2"></span></span>';
+  if(msg)open();
+  agreeText(key,winner,loser).then(function(t){var a=document.getElementById("ag2");if(!t||!a||tok!==afterTok)return;a.innerHTML=t;if(el.hidden)open();});}
+var afterTok=0;
 // "64% of fans took him too": a live count of fans who have both players (or one of them) on that list, never shown under 20 fans.
 // Before then, it falls back to the Fan Board ranks.
 var AGREE={};
