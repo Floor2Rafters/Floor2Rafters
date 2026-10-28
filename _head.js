@@ -22,7 +22,9 @@ function loadPlayers(rows){
   rows.slice().sort(function(a,b){return (a.sort||0)-(b.sort||0)||a.id-b.id;}).forEach(function(r){
     var p={id:r.id,n:r.name,t:r.team||"",pos:r.pos,note:r.note||"",active:r.active!==false,
       s:r.pts==null?null:[r.games,+r.pts,+r.reb,+r.ast,+r.stl,+r.blk],goat:!!r.goat,c:r.career||null,j:r.jersey!=null&&r.jersey!==""?String(r.jersey):null};
-    P[r.id]=p;if(p.active&&POOL[p.pos])POOL[p.pos].push(r.id);if(p.goat)gl.push(p);});
+    // Out for the season (note starts "Out for the season"): shown with an OUT tag, but left out of new Head 2 Head matchups.
+    p.inj=/^out for the season/i.test(p.note);
+    P[r.id]=p;if(p.active&&!p.inj&&POOL[p.pos])POOL[p.pos].push(r.id);if(p.goat)gl.push(p);});
   // All-time pool: everyone flagged goat (legends and current greats), in the curated order
   gl.forEach(function(p){if(p.c&&/[–-]$/.test(p.c.years||""))p.c.years+="now";}); // still playing: 2008–now
   POOL.goat=gl.sort(function(a,b){return ((a.c&&a.c.order)||0)-((b.c&&b.c.order)||0);}).map(function(p){return p.id;});

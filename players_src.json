@@ -652,7 +652,7 @@
    0.5
   ],
   "note": "",
-  "active": true
+  "active": false
  },
  {
   "id": 36,
@@ -754,7 +754,7 @@
   "id": 42,
   "name": "Walter Clayton Jr.",
   "pos": "pg",
-  "team": "MEM",
+  "team": "DAL",
   "stats": [
    69,
    7.8,
@@ -2638,7 +2638,7 @@
    0
   ],
   "note": "",
-  "active": true
+  "active": false
  },
  {
   "id": 156,
@@ -2654,7 +2654,7 @@
    0.2
   ],
   "note": "",
-  "active": true
+  "active": false
  },
  {
   "id": 157,
@@ -2740,7 +2740,7 @@
   "id": 162,
   "name": "Dalton Knecht",
   "pos": "sf",
-  "team": "LAL",
+  "team": "NYK",
   "stats": [
    54,
    4.2,
@@ -2830,7 +2830,7 @@
    0.3
   ],
   "note": "",
-  "active": true
+  "active": false
  },
  {
   "id": 168,
@@ -4626,7 +4626,7 @@
    0.9
   ],
   "note": "",
-  "active": true
+  "active": false
  },
  {
   "id": 277,
@@ -4641,7 +4641,7 @@
    0.2,
    0.5
   ],
-  "note": "",
+  "note": "Out for the season (Achilles)",
   "active": true
  },
  {
@@ -5096,7 +5096,7 @@
    0.2
   ],
   "note": "",
-  "active": true
+  "active": false
  },
  {
   "id": 306,

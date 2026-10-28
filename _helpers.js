@@ -4,7 +4,7 @@ var TC={ATL:"#E03A3E",BOS:"#007A33",BKN:"#C9CBD0",CHA:"#00788C",CHI:"#CE1141",CL
   OKC:"#EF3B24",ORL:"#0077C0",PHI:"#ED174C",PHX:"#E56020",POR:"#E03A3E",SAC:"#5A2D81",SAS:"#C4CED4",TOR:"#CE1141",UTA:"#6C3FA0",WAS:"#E31837"};
 function tc(p){return TC[p&&p.t]||"#7C82A6";}
 function bigPos(p){return p.pos==="pf"||p.pos==="c";}
-function teamTag(p){return p.t?'<span class="tm">'+esc(p.t)+'</span>':'';}
+function teamTag(p){return (p.inj?'<span class="tag" title="Out for the season">OUT</span>':'')+(p.t?'<span class="tm">'+esc(p.t)+'</span>':'');}
 var CHEV={up:"M1 10 L8 3 L15 10",down:"M1 2 L8 9 L15 2"};
 function chev(dir,w){w=w||12;return '<svg width="'+w+'" height="'+Math.round(w*.75)+'" viewBox="0 0 16 12" aria-hidden="true"><path d="'+CHEV[dir]+'" fill="none" stroke="currentColor" stroke-width="3.5"/></svg>';}
 function moveHTML(prev,rank,hasPrev){
