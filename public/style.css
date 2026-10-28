@@ -843,3 +843,5 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 .hm-copy .hm-ctas{width:100%;justify-content:center}
 .hm-mark{height:84px;width:auto;margin-bottom:4px}
 @media (max-width:759px){.hm-nav a,.hm-nav .btn{display:none}}
+/* tagline stays on one line, shrinking a little on narrow phones */
+.hm-copy .hm-sub,.welcome .sub{white-space:nowrap;font-size:min(18px,3.6vw)}
