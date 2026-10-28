@@ -24,9 +24,12 @@ function syncOverall(){
   me.l.overall=out;}
 function waiting(key){if(key==="overall"){var inL={};me.l.overall.forEach(function(id){inL[id]=1;});return ovPool().filter(function(id){return !inL[id];});}
   var seen={};me.l[key].forEach(function(id){seen[id]=1;});me.out[key].forEach(function(id){seen[id]=1;});return orderFor(key).filter(function(id){return !seen[id];});}
-// Matchups come in a random order: each position's players are shuffled once per visit, so no two sessions run the same.
-var ORDER={};
-function orderFor(key){if(!ORDER[key]||ORDER[key].length!==POOL[key].length){var a=POOL[key].slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}ORDER[key]=a;}return ORDER[key];}
+// Stars first: each position's players are sorted by star power (statVal), cut into tiers of 10,
+// and shuffled inside each tier once per visit. New fans meet the big names first, and no two sessions run the same.
+var ORDER={},TIER=10;
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function orderFor(key){if(!ORDER[key]||ORDER[key].length!==POOL[key].length){var v={},a=POOL[key].slice();a.forEach(function(id){v[id]=statVal(id);});
+  a.sort(function(x,y){return v[y]-v[x];});var out=[];for(var i=0;i<a.length;i+=TIER)out=out.concat(shuffle(a.slice(i,i+TIER)));ORDER[key]=out;}return ORDER[key];}
 function flight(key,id){var L=me.l[key],C=cap(key);return L.length>=C?{key:key,cand:id,lo:0,hi:C,full:true,first:true}:{key:key,cand:id,lo:0,hi:L.length};}
 function nextCand(key){var busy={};(ui.fly||[]).forEach(function(f){busy[f.cand]=1;});var w=waiting(key);for(var i=0;i<w.length;i++)if(!busy[w[i]])return w[i];return null;}
 function h2hStart(key){if(key==="overall"){ui.h2h=null;return;}var w=waiting(key),L=me.l[key];ui.fly=[];
@@ -63,7 +66,7 @@ function h2hPick(candWins){haptic();var h=ui.h2h;if(h.rc)return rcPick(candWins)
   changed();
   while(ui.fly.length<2){var nc=nextCand(key);if(nc==null)break;ui.fly.push(flight(key,nc));}
   if(!ui.fly.length){ui.h2h=null;ui.hang=key;toast("Every "+POSL[key]+" checked. Your list is locked in.");render();return;}
-  ui.h2h=ui.fly[0];h2hMid();if(ui.first10){var fk=ui.first10;ui.first10=null;render();ui.shareKey=fk;ui.sheet="first10";renderSheet();return;}if(msg)toast(msg);render();}
+  ui.h2h=ui.fly[0];h2hMid();if(ui.first10&&!ui.sheet){var fk=ui.first10;ui.first10=null;render();ui.shareKey=fk;ui.sheet="first10";renderSheet();return;}if(msg)toast(msg);render();}
 function next(key){h2hStart(key);if(!ui.h2h&&!waiting(key).length)toast(key==="overall"?(me.l.overall.length>=DEEP?"Your overall top 50 is set!":"Everyone you've picked so far is ranked."):"Every "+POSL[key]+" checked. Your list is locked in.");render();}
 function h2hSkip(){var h=ui.h2h,key=h.key;me.out[key].push(h.cand);ui.fly=(ui.fly||[]).filter(function(f){return f!==h;});changed();
   var nc=nextCand(key);if(nc!=null)ui.fly.push(flight(key,nc));ui.h2h=ui.fly[0]||null;if(ui.h2h)h2hMid();render();}

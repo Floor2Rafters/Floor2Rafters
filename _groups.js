@@ -125,7 +125,7 @@ function openJoin(code){
   if(!code)try{code=localStorage.getItem(GJOIN);}catch(e){}
   if(!code)return false;ui.nav="groups";ui.revealChecked=true;
   if(demo){toast("Groups turn on once sign-in is set up.");return true;}
-  ui.gcode=code;if(user){ui.sheet="gjoin";}else{ui.sheet="signin";toast("Sign in to join your friends' group.");}return true;}
+  ui.gcode=code;if(user){ui.sheet="gjoin";}else{ui.sheet="signin";setTimeout(function(){toast("Sign in to join your friends' group.");},0);}return true;}
 function groupLinkOnBoot(){
   var code=joinCodeFrom(location.href);
   if(code)try{history.replaceState(null,"","/");}catch(e){}

@@ -268,7 +268,9 @@ function renderSheet(){
   if(ui.sheet!=="welcome")try{if(ui.sawWelcome)localStorage.setItem("f2r-seen","1");}catch(e){}
   el.classList.remove("tinted");
   if(!ui.sheet){el.hidden=true;el.innerHTML="";lastSheet=null;return;}
+  // One pop-up at a time: a newly opened sheet clears the after-pick panel and any leftover toast.
   if(typeof hideAfter==="function")hideAfter();
+  if(ui.sheet!==lastSheet){var ot=$("#toast");if(ot){ot.hidden=true;clearTimeout(toastT);}}
   el.hidden=false;
   var X='<button class="x" data-close aria-label="Close">×</button>';
   if(ui.sheet==="signin")el.innerHTML='<div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sh-t">'+X+
@@ -400,7 +402,9 @@ async function shareCard(key,size){
   var D='"Saira Condensed","Arial Narrow",sans-serif',B='"Helvetica Neue",Helvetica,Inter,Arial,sans-serif';
   try{await Promise.all([document.fonts.load('800 104px "Saira Condensed"'),document.fonts.load('600 34px Inter')]);}catch(e){}
   var mark=await loadImg("/brand/mark.svg");
-  var W=1080,H=story?1920:1350,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+  // Drawn at 2x (2160 wide) so text and the logo stay crisp on phone screens and after apps compress the image.
+  var S=2,W=1080,H=story?1920:1350,c=document.createElement("canvas");c.width=W*S;c.height=H*S;var x=c.getContext("2d");x.scale(S,S);
+  x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
   x.fillStyle="#07080F";x.fillRect(0,0,W,H);
   // purple spotlight from the top
   x.save();x.translate(W/2,-166);x.scale(1,940/(W*1.1));var g=x.createRadialGradient(0,0,0,0,0,W*1.1);
