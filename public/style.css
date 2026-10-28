@@ -799,8 +799,8 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 .v1 .mc i{position:absolute;top:8px;left:10px;font-style:normal;font:800 13px var(--display);letter-spacing:.06em;color:rgba(255,255,255,.75)}
 .v1 .mc b{font:800 17px/0.95 var(--display);text-transform:uppercase;color:#fff}
 .v1 .mc s{text-decoration:none;font:700 11px var(--body);color:rgba(255,255,255,.6);letter-spacing:.08em}
-.v1 .mc.a{transform:rotate(-3deg);box-shadow:0 0 0 2px var(--purple),0 0 26px rgba(139,92,246,.7),0 10px 24px rgba(0,0,0,.45)}
-.v1 .mc.b{transform:rotate(3deg);opacity:.72}
+.v1 .mc.a{box-shadow:0 0 0 2px var(--purple),0 0 26px rgba(139,92,246,.7),0 10px 24px rgba(0,0,0,.45)}
+.v1 .mc.b{opacity:.55}
 .v1 .vs{font:800 20px var(--display);color:var(--white);background:var(--void);box-shadow:inset 0 0 0 1px var(--line);padding:6px 8px;z-index:1}
 .v1 .tap{position:absolute;left:calc(50% - 76px);top:62%;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 0 0 6px rgba(255,255,255,.18)}
 /* step 2: position tabs */
@@ -816,7 +816,7 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 .hm-vis .ml .dim{opacity:.45}
 /* step 3: overall list + live stamp */
 .v3 .ml span{box-shadow:inset 3px 0 0 var(--blue)}
-.v3 .stamp{position:absolute;right:14px;bottom:12px;display:flex;align-items:center;gap:6px;font:800 12px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--on-blue);background:var(--blue);padding:5px 9px;transform:rotate(-4deg);box-shadow:0 0 18px rgba(61,225,255,.55)}
+.v3 .stamp{position:absolute;right:14px;bottom:12px;display:flex;align-items:center;gap:6px;font:800 12px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--on-blue);background:var(--blue);padding:5px 9px;box-shadow:0 0 18px rgba(61,225,255,.55)}
 .v3 .stamp i{width:7px;height:7px;border-radius:50%;background:#FF3B3B;box-shadow:0 0 6px #FF3B3B;animation:hmLive 1.4s steps(2) infinite}
 @keyframes hmLive{50%{opacity:.2}}
 @media (prefers-reduced-motion:reduce){.v3 .stamp i{animation:none}}
@@ -832,3 +832,6 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 .f10-top span{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .f10-top i{font-style:normal;font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--dim)}
 .f10 .btn+.btn{margin-top:8px}
+
+/* straight, clean step pictures (no tilts, no tap dot) */
+.v1 .tap{display:none}
