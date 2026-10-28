@@ -282,7 +282,7 @@ function renderSheet(){
     '<form data-code><label class="lbl" for="otp">CODE</label><input id="otp" class="input otp" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456"><button class="btn" type="submit">Sign in</button></form>'+
     '<button class="link center" data-signin>Use a different email</button></div>';
   else if(ui.sheet==="welcome")el.innerHTML='<div class="sheet-card welcome" role="dialog" aria-modal="true" aria-labelledby="wl-t">'+X+
-    '<img class="logo" src="/brand/mark.svg" alt="" width="81" height="84"><h2 id="wl-t" class="hero">Floor 2<br>Rafters.</h2><p class="sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
+    '<img class="logo" src="/brand/mark.svg" alt="" width="81" height="84"><h2 id="wl-t" class="hero">Floor 2<br>Rafters</h2><p class="sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
     '<ol class="how"><li><span class="num">1</span><span><b>Head to head</b><span class="t">Two players check in side by side. Your decision determines where each one ranks.</span></span></li>'+
     '<li><span class="num">2</span><span><b>Rank every position</b><span class="t">Build a top 10 at each of the five positions. Then take on the all‑time greats.</span></span></li>'+
     '<li><span class="num">3</span><span><b>Make your top 50</b><span class="t">Your best from each position go head to head for one overall top 50. That list becomes your vote on the Fan Board.</span></span></li></ol>'+

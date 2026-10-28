@@ -416,8 +416,8 @@ function homeHTML(){
   var board=rows.length?'<div class="list">'+top+'</div><div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div><span class="note">'+(b.sample?"Sample board. The real one goes live at launch.":"Live · "+fmt(voters)+" fans ranking")+'</span>'
     :'<div class="empty"><b>No picks yet. Be the first.</b><br>The board goes live with the first fan\'s list.</div>';
   return '<div class="home">'+
-    '<header class="hm-top"><img src="/brand/mark.svg" alt="F2R" class="hm-lockup"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
-    '<section class="hm-hero"><div class="hm-copy"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Floor 2<br>Rafters.</h1>'+
+    '<header class="hm-top"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
+    '<section class="hm-hero"><div class="hm-copy"><img src="/brand/mark.svg" alt="F2R" class="hm-mark" width="81" height="84"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Floor 2<br>Rafters</h1>'+
       '<p class="hm-sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
       '<div class="hm-ctas"><button class="btn" data-go-pick>Start ranking</button><button class="btn tint" data-go-board>See the board</button></div>'+
       '</div>'+
@@ -783,7 +783,7 @@ function renderSheet(){
     '<form data-code><label class="lbl" for="otp">CODE</label><input id="otp" class="input otp" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456"><button class="btn" type="submit">Sign in</button></form>'+
     '<button class="link center" data-signin>Use a different email</button></div>';
   else if(ui.sheet==="welcome")el.innerHTML='<div class="sheet-card welcome" role="dialog" aria-modal="true" aria-labelledby="wl-t">'+X+
-    '<img class="logo" src="/brand/mark.svg" alt="" width="81" height="84"><h2 id="wl-t" class="hero">Floor 2<br>Rafters.</h2><p class="sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
+    '<img class="logo" src="/brand/mark.svg" alt="" width="81" height="84"><h2 id="wl-t" class="hero">Floor 2<br>Rafters</h2><p class="sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
     '<ol class="how"><li><span class="num">1</span><span><b>Head to head</b><span class="t">Two players check in side by side. Your decision determines where each one ranks.</span></span></li>'+
     '<li><span class="num">2</span><span><b>Rank every position</b><span class="t">Build a top 10 at each of the five positions. Then take on the all‑time greats.</span></span></li>'+
     '<li><span class="num">3</span><span><b>Make your top 50</b><span class="t">Your best from each position go head to head for one overall top 50. That list becomes your vote on the Fan Board.</span></span></li></ol>'+

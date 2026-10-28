@@ -8,8 +8,8 @@ function homeHTML(){
   var board=rows.length?'<div class="list">'+top+'</div><div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div><span class="note">'+(b.sample?"Sample board. The real one goes live at launch.":"Live · "+fmt(voters)+" fans ranking")+'</span>'
     :'<div class="empty"><b>No picks yet. Be the first.</b><br>The board goes live with the first fan\'s list.</div>';
   return '<div class="home">'+
-    '<header class="hm-top"><img src="/brand/mark.svg" alt="F2R" class="hm-lockup"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
-    '<section class="hm-hero"><div class="hm-copy"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Floor 2<br>Rafters.</h1>'+
+    '<header class="hm-top"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
+    '<section class="hm-hero"><div class="hm-copy"><img src="/brand/mark.svg" alt="F2R" class="hm-mark" width="81" height="84"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Floor 2<br>Rafters</h1>'+
       '<p class="hm-sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
       '<div class="hm-ctas"><button class="btn" data-go-pick>Start ranking</button><button class="btn tint" data-go-board>See the board</button></div>'+
       '</div>'+

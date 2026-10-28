@@ -835,3 +835,11 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 
 /* straight, clean step pictures (no tilts, no tap dot) */
 .v1 .tap{display:none}
+
+/* front page top, version B: logo centered over the title, everything centered */
+.hm-top{justify-content:flex-end}
+.hm-copy{align-items:center;text-align:center}
+.hm-copy .hm-sub{margin:0 auto}
+.hm-copy .hm-ctas{width:100%;justify-content:center}
+.hm-mark{height:84px;width:auto;margin-bottom:4px}
+@media (max-width:759px){.hm-nav a,.hm-nav .btn{display:none}}
