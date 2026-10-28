@@ -90,7 +90,7 @@ async function loadBoard(key){
 }
 // Until 10 fans have an overall list, the overall board leans on a starting top 50 from this season's stats (see supabase/schema.sql).
 var SEED_FANS=10;
-function liveLabel(key,voters){return key==="overall"&&voters<SEED_FANS?"Live · starting from stats until "+SEED_FANS+" fans vote":"Live · "+fmt(voters)+" fans ranking";}
+function liveLabel(key,voters){return key==="overall"&&voters<SEED_FANS?"Live · starting from stats until "+SEED_FANS+" fans vote":"Live · "+fmt(voters)+(voters===1?" fan ranking":" fans ranking");}
 function boardsStale(){return Object.keys(boards).some(function(k){var b=boards[k];return b&&b.at&&Date.now()-b.at>120000;});}
 function ensureBoard(key){
   if(boards[key]&&!(boards[key].at&&Date.now()-boards[key].at>120000&&!boards[key].loading))return;
@@ -138,12 +138,12 @@ function moversSheet(key){
 /* ---------- Jumbotron ---------- */
 function lastName(n){var w=n.split(" ");var l=w[w.length-1];if(/^(Jr\.?|Sr\.?|II|III|IV)$/.test(l)&&w.length>2)l=w[w.length-2];l=l.split("-")[0];return l.toUpperCase();}
 function tickerItems(rows,hasPrev,voters){
-  if(!hasPrev)return [[fmt(voters)+" FANS","soft"],["LIVE","blue"],["RANK YOURS","purple"]];
+  if(!hasPrev)return [[fmt(voters)+(voters===1?" FAN":" FANS"),"soft"],["LIVE","blue"],["RANK YOURS","purple"]];
   var m=moverLists(rows),out=[];
   if(m.up[0])out.push(["▲"+(m.up[0].prev_rank-m.up[0].rank)+" "+lastName(P[m.up[0].player_id].n),"blue"]);
   if(m.dn[0])out.push(["▼"+(m.dn[0].rank-m.dn[0].prev_rank)+" "+lastName(P[m.dn[0].player_id].n),"down"]);
   if(m.nw[0])out.push(["NEW "+lastName(P[m.nw[0].player_id].n),"purple"]);
-  if(!out.length)out.push([fmt(voters)+" FANS","soft"]);
+  if(!out.length)out.push([fmt(voters)+(voters===1?" FAN":" FANS"),"soft"]);
   while(out.length>2&&out.map(function(x){return x[0];}).join("   ").length>32)out.pop(); // keep the ticker on one line
   return out;}
 function tickerHTML(items){return '<div class="jt-tick">'+items.map(function(x){return '<span class="c-'+x[1]+'">'+esc(x[0])+'</span>';}).join("")+'</div>';}
@@ -169,8 +169,9 @@ function startJumbo(){clearInterval(jtTimer);jtTimer=null;
   jtTimer=setInterval(function(){var s=document.querySelector(".jt-slot");if(!s||!JT){clearInterval(jtTimer);return;}
     if(document.hidden)return;
     s.classList.add("flip");
-    setTimeout(function(){if(!JT||!s.isConnected)return;JT.i=(JT.i+1)%JT.m;s.innerHTML=jtSlot(JT.i);fitNames(s);s.classList.remove("flip");
-      document.querySelectorAll(".jt-dots i").forEach(function(d,k){d.className=k===JT.i?"on":"";});},260);},4000);}
+    // the screen always comes back on, even if a slide fails to draw (it skips to the next one)
+    setTimeout(function(){try{if(!JT||!s.isConnected)return;JT.i=(JT.i+1)%JT.m;s.innerHTML=jtSlot(JT.i);fitNames(s);
+      document.querySelectorAll(".jt-dots i").forEach(function(d,k){d.className=k===JT.i?"on":"";});}catch(e){}finally{s.classList.remove("flip");}},260);},4000);}
 // The scoreboard as a real center-hung board: steel cables, a riveted top ring with a name plate, angled side screens,
 // a recessed screen behind glass, an LED ribbon on the bottom ring and lamps that light the floor below.
 // No internet: the scoreboard loses its feed. The screen goes dark with a flickering NO SIGNAL; the lights dim.

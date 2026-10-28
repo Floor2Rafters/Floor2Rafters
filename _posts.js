@@ -62,7 +62,7 @@ async function drawPost(kind,key){
     if(mark)x.drawImage(mark,80,70,110,114);
     pText(x,"FAN BOARD · "+pBoardName(key),80,250,"700 26px "+PB,"#3DE1FF","left",3);
     pText(x,"THE FANS",76,370,"800 120px "+PF,"#EEF1FF");pText(x,"HAVE SPOKEN.",76,480,"800 120px "+PF,"#EEF1FF");
-    pText(x,(b.week?dateLabel(b.week):"Live")+" · "+fmt(voters)+" fans ranking",80,540,"500 30px "+PB,"#A7ACCA");
+    pText(x,(b.week?dateLabel(b.week):"Live")+" · "+fmt(voters)+(voters===1?" fan ranking":" fans ranking"),80,540,"500 30px "+PB,"#A7ACCA");
     pSpon(x,key,80,H-170,"left");pH2H(x,80,H-90,56);pText(x,"floor2rafters.com",80,H-48,"600 28px "+PB,"#A7ACCA");
     var y4=110;rows.slice(0,5).forEach(function(r){pRow(x,key,r,760,y4,W-840,112,1.05,hasPrev,voters);y4+=128;});
   }

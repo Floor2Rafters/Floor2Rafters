@@ -69,7 +69,7 @@ function crawlItems(key,b,rows,hasPrev,voters){var out=[],nm=function(r){return 
     m.up.slice(0,3).forEach(function(r){out.push(["▲"+(r.prev_rank-r.rank)+" "+nm(r),"blue"]);});
     m.dn.slice(0,3).forEach(function(r){out.push(["▼"+(r.rank-r.prev_rank)+" "+nm(r),"down"]);});
     m.nw.slice(0,2).forEach(function(r){out.push(["NEW #"+r.rank+" "+nm(r),"purple"]);});}
-  if(voters)out.push([fmt(voters)+" FANS RANKING","soft"]);
+  if(voters)out.push([fmt(voters)+(voters===1?" FAN RANKING":" FANS RANKING"),"soft"]);
   out.push(["LIVE","blue"]);
   return out;}
 function crawlHTML(key,b,rows,hasPrev,voters){if(!rows.length)return "";var it=crawlItems(key,b,rows,hasPrev,voters);
