@@ -420,7 +420,7 @@ function homeHTML(){
     '<section class="hm-hero"><div class="hm-copy"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Floor 2<br>Rafters.</h1>'+
       '<p class="hm-sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
       '<div class="hm-ctas"><button class="btn" data-go-pick>Start ranking</button><button class="btn tint" data-go-board>See the board</button></div>'+
-      '<span class="note">Free. Works on any phone. No app download needed.</span></div>'+
+      '</div>'+
       '<div class="hm-board" id="hm-board"><div class="hrow"><span class="hm-bt">Fan Board · Overall</span></div>'+board+'</div></section>'+
     '<section class="hm-how" id="hm-how"><div class="hm-howhd"><span class="kicker blue">How it works</span><h2 class="hm-h2">Three steps.<br>Your rankings.</h2></div><div class="hm-steps">'+
       '<div class="hm-step"><div class="hm-vis v1" aria-hidden="true">'+
