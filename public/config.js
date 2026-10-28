@@ -5,7 +5,7 @@ window.F2R_CONFIG = {
   supabaseUrl: "https://hmbcijcpsjulvddwlbtd.supabase.co",
   supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtYmNpamNwc2p1bHZkZHdsYnRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4NDg3MTEsImV4cCI6MjEwNzQyNDcxMX0.pkZzriqeg_5RupTPnDRGFN7xh_KfyAkTxeiUqRsEKbI",
   google: true, // set to false if you haven't turned on Google sign-in yet
-  statsLabel: "2025-26 regular season", // shown with player stats; change when the new season's stats go in
+  statsLabel: "2026-27 season (through Oct 27)", // shown with player stats; change when the new season's stats go in
 
   // Sponsor spot: "Fan Board presented by…" under the scoreboard, on the #1 reveal and on the board posts.
   // Off while this is null. When you sell it, replace null with something like:

@@ -45,16 +45,33 @@ def main(csv_path, label):
         def num(x):
             try: return str(round(float(x), 1))
             except (TypeError, ValueError): return 'null'
+        # keep an "Out for the season" note (it drives the OUT tag); any other note is cleared once a player has stats
+        note = "note" if OUT.match(p.get('note') or '') else "''"
         out.append(f"update public.players set games={int(float(s['g'] or 0))},pts={num(s['pts'])},reb={num(s['reb'])},ast={num(s['ast'])},"
-                   f"stl={num(s['stl'])},blk={num(s['blk'])},note='' where id={p['id']};")
+                   f"stl={num(s['stl'])},blk={num(s['blk'])},note={note} where id={p['id']};")
+        p['stats'] = [int(float(s['g'] or 0))] + [float(num(s[k])) if num(s[k]) != 'null' else None for k in ('pts', 'reb', 'ast', 'stl', 'blk')]
+        if note == "''": p['note'] = ''
+    # Active players with no games yet this season: clear last season's numbers so they never show under this season's label.
+    blank = [p for p in players if p.get('active', True) and p['name'] in missing]
+    for p in blank:
+        keep = OUT.match(p.get('note') or '')
+        out.append(f"update public.players set games=null,pts=null,reb=null,ast=null,stl=null,blk=null"
+                   f"{'' if keep else ', note=' + chr(39) + NO_GAMES + chr(39)} where id={p['id']};")
+        p['stats'] = None
+        if not keep: p['note'] = NO_GAMES
+    if '--demo' in sys.argv:
+        json.dump(players, open(os.path.join(here, 'players_src.json'), 'w'), indent=1, ensure_ascii=False)
     print('-- F2R stats update: ' + label)
     print('begin;')
     print('\n'.join(out))
     print('commit;')
-    print(f'-- {len(out)} players updated.')
+    print(f'-- {len(out) - len(blank)} players updated with stats.')
     if missing:
-        print('-- No 2026-27 games yet (rookies who have not played, injured players) or name mismatch, left unchanged:')
+        print(f'-- No games yet this season (shown as "{NO_GAMES}"): check any name here that should have games:')
         print('-- ' + ', '.join(missing))
+
+OUT = re.compile(r'out for the season', re.I)
+NO_GAMES = 'No games yet this season'
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
