@@ -1,0 +1,32 @@
+name: Stats refresh
+
+# Every Monday and Thursday at 9:00 AM Eastern (13:00 UTC), plus a "Run workflow" button for any time.
+on:
+  schedule:
+    - cron: "0 13 * * 1,4"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Update stats in Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python3 tools/auto_stats.py
+      - name: Rebuild the demo player list
+        run: python3 build_app.py
+      - name: Save the new label and demo stats
+        run: |
+          git config user.name "F2R stats bot"
+          git config user.email "noreply@floor2rafters.com"
+          git add public/config.js players_src.json public/players.json public/app.js
+          git diff --cached --quiet || (git commit -m "Stats refresh" && git push)
