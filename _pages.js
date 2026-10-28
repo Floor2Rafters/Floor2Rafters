@@ -8,9 +8,9 @@ function homeHTML(){
   var board=rows.length?'<div class="list">'+top+'</div><div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div><span class="note">'+(b.sample?"Sample board. The real one goes live at launch.":"Live · "+fmt(voters)+" fans ranking")+'</span>'
     :'<div class="empty"><b>No picks yet. Be the first.</b><br>The board goes live with the first fan\'s list.</div>';
   return '<div class="home">'+
-    '<header class="hm-top"><img src="/brand/lockup.svg" alt="Floor 2 Rafters" class="hm-lockup"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
-    '<section class="hm-hero"><div class="hm-copy"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Rank the<br>league.</h1>'+
-      '<p class="hm-sub">Two players. One pick. Your rankings, live against every fan\'s.</p>'+
+    '<header class="hm-top"><img src="/brand/mark.svg" alt="F2R" class="hm-lockup"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
+    '<section class="hm-hero"><div class="hm-copy"><span class="kicker blue">Fan-voted NBA rankings</span><h1 class="hm-h1">Floor 2<br>Rafters.</h1>'+
+      '<p class="hm-sub">Rank the NBA your way, from the Floor 2 the Rafters.</p>'+
       '<div class="hm-ctas"><button class="btn" data-go-pick>Start ranking</button><button class="btn tint" data-go-board>See the board</button></div>'+
       '<span class="note">Free. Works on any phone. No app download needed.</span></div>'+
       '<div class="hm-board" id="hm-board"><div class="hrow"><span class="hm-bt">Fan Board · Overall</span></div>'+board+'</div></section>'+
@@ -18,13 +18,13 @@ function homeHTML(){
       '<div class="hm-step"><div class="hm-vis v1" aria-hidden="true">'+
         '<div class="mc a" style="--c:#F58426"><i>PG</i><b>Jalen<br>Brunson</b><s>NYK</s></div><span class="vs">VS</span>'+
         '<div class="mc b" style="--c:#552583"><i>PG</i><b>Luka<br>Doncic</b><s>LAL</s></div><span class="tap"></span></div>'+
-        '<div class="hm-st"><span class="sn">01</span><h3>Pick head to head</h3><p>Two players pop up. Tap the one you\'d take, and he lands in his spot on your list.</p></div></div>'+
+        '<div class="hm-st"><span class="sn">01</span><h3>Head to head</h3><p>Two players check in side by side. Your decision determines where each one ranks.</p></div></div>'+
       '<div class="hm-step"><div class="hm-vis v2" aria-hidden="true"><div class="tabs"><span class="on">PG</span><span>SG</span><span>SF</span><span>PF</span><span>C</span><span class="gold">ALL-TIME</span></div>'+
         '<div class="ml"><span><b>1</b>Shai Gilgeous-Alexander</span><span><b>2</b>Luka Doncic</span><span><b>3</b>Jalen Brunson</span><span class="dim"><b>4</b>Tyrese Haliburton</span></div></div>'+
-        '<div class="hm-st"><span class="sn">02</span><h3>Rank every position</h3><p>A top 10 at point guard, shooting guard, small forward, power forward and center. Then take on the all‑time greats.</p></div></div>'+
+        '<div class="hm-st"><span class="sn">02</span><h3>Rank every position</h3><p>Build a top 10 at each of the five positions. Then take on the all‑time greats.</p></div></div>'+
       '<div class="hm-step bl"><div class="hm-vis v3" aria-hidden="true"><div class="ml"><span><b>1</b>Shai Gilgeous-Alexander<i>PG</i></span><span><b>2</b>Nikola Jokic<i>C</i></span><span><b>3</b>Giannis Antetokounmpo<i>PF</i></span><span class="dim"><b>50</b>…</span></div>'+
         '<span class="stamp"><i></i>Your vote · live</span></div>'+
-        '<div class="hm-st"><span class="sn">03</span><h3>Make your top 50</h3><p>Put your best from every position against each other and create one overall top 50. That\'s your vote on the Fan Board.</p></div></div>'+
+        '<div class="hm-st"><span class="sn">03</span><h3>Make your top 50</h3><p>Your best from each position go head to head for one overall top 50. That list becomes your vote on the Fan Board.</p></div></div>'+
     '</div></section>'+
     '<section class="hm-fans"><div><h2 class="hm-h2">The fans<br>decide</h2><p class="hm-sub">No experts, no hot-take hosts. The board adds up every fan\'s lists, live: #1 on a list is worth 50 points, #50 is worth 1. The arrows show who the fans are buying and selling this week.</p></div>'+
       '<div class="hm-stats"><div><b class="blue">6</b><span>boards: Overall plus all five positions</span></div><div><b>LIVE</b><span>the board moves as fans pick, all season</span></div><div><b>50</b><span>players in your overall list</span></div><div><b class="purple">1 TAP</b><span>per pick, a few minutes per session</span></div></div></section>'+
