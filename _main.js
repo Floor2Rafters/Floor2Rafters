@@ -88,6 +88,9 @@ async function loadBoard(key){
   checkCalls(key);
   if(key==="overall"&&rows.length&&ready)changed();
 }
+// Until 10 fans have an overall list, the overall board leans on a starting top 50 from this season's stats (see supabase/schema.sql).
+var SEED_FANS=10;
+function liveLabel(key,voters){return key==="overall"&&voters<SEED_FANS?"Live · starting from stats until "+SEED_FANS+" fans vote":"Live · "+fmt(voters)+" fans ranking";}
 function boardsStale(){return Object.keys(boards).some(function(k){var b=boards[k];return b&&b.at&&Date.now()-b.at>120000;});}
 function ensureBoard(key){
   if(boards[key]&&!(boards[key].at&&Date.now()-boards[key].at>120000&&!boards[key].loading))return;
@@ -246,7 +249,7 @@ function fansBody(key){
   h+=deskSideHTML(key,b,rows,hasPrev);
   h+='<!--split-->';
   h+='<nav class="tabs" aria-label="Boards">'+TABS.map(function(t){return '<button class="tb'+(t[0]==="overall"?" ov":isGoat(t[0])?" gt":"")+'" data-tab="'+t[0]+'" aria-pressed="'+(t[0]===key)+'">'+(t[0]==="overall"?"OVERALL":isGoat(t[0])?"ALL-TIME":t[1])+'</button>';}).join("")+'</nav>';
-  h+='<div class="hrow"><span class="kicker'+(b&&b.sample?"":" blue")+'">'+(b&&b.sample?"Sample board · real one at launch":"Live · "+fmt(voters)+" fans ranking")+'</span>'+
+  h+='<div class="hrow"><span class="kicker'+(b&&b.sample?"":" blue")+'">'+(b&&b.sample?"Sample board · real one at launch":liveLabel(key,voters))+'</span>'+
     (hasPrev&&rows.length?'<button class="link" data-movers style="padding:0;white-space:nowrap">Movers ›</button>':'')+'</div>';
   if(b&&b.loading)return h+'<div class="empty">Loading the board…</div>';
   if(b&&b.error)return h+'<div class="empty">The board comes back when you\'re online again.</div>';

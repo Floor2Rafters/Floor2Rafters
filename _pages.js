@@ -5,7 +5,7 @@ function homeHTML(){
   ensureBoard("overall");var b=boards.overall,rows=b&&b.rows||[],voters=(b&&b.voters)||0;
   var top=rows.slice(0,5).map(function(r,i){var p=P[r.player_id];if(!p)return "";
     return '<button class="r tap" data-pid="'+r.player_id+'" style="--tc:'+tc(p)+'">'+ghost(r.rank)+'<span class="n t5">'+r.rank+'</span><span class="who"><span class="nm">'+esc(p.n)+'</span><span class="sc">'+POSL[p.pos]+' · '+fmt(r.points)+' pts'+(voters?' · '+Math.round(r.votes/voters*100)+'% of fans':'')+'</span></span>'+teamTag(p)+'</button>';}).join("");
-  var board=rows.length?'<div class="list">'+top+'</div><div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div><span class="note">'+(b.sample?"Sample board. The real one goes live at launch.":"Live · "+fmt(voters)+" fans ranking")+'</span>'
+  var board=rows.length?'<div class="list">'+top+'</div><div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div><span class="note">'+(b.sample?"Sample board. The real one goes live at launch.":liveLabel("overall",voters))+'</span>'
     :'<div class="empty"><b>No picks yet. Be the first.</b><br>The board goes live with the first fan\'s list.</div>';
   return '<div class="home">'+
     '<header class="hm-top"><nav class="hm-nav"><a href="#hm-board">Fan Board</a><a href="#hm-how">How it works</a>'+(user?'':'<button class="link" data-signin>Sign in</button>')+'<button class="btn sm" data-go-pick>Start ranking</button></nav></header>'+
