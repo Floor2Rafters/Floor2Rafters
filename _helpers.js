@@ -16,6 +16,8 @@ function moveHTML(prev,rank,hasPrev){
   if(d<0)return '<span class="mv down" aria-label="down '+(-d)+'">'+chev("down")+(-d)+'</span>';
   return '<span class="mv" aria-label="no change">–</span>';}
 function cutLine(){return '<div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div>';}
+// Short stats label for the pick screen and player cards: just the season, e.g. "2026-27 season" (Settings keeps the full date).
+function seasonLabel(){return String(CFG.statsLabel||"Last season").replace(/\s*\(.*\)\s*$/,"");}
 function numCls(i){return "n"+(i<5?" t5":"");}
 function ghost(rk){return '<span class="ghost" aria-hidden="true">'+rk+'</span>';}
 function fmt(n){return Number(n||0).toLocaleString("en-US");}

@@ -41,7 +41,7 @@ function statsPanel(a,b,key){
       ((a.c.stl==null||b.c.stl==null)?'<p class="note center">— Steals and blocks weren\'t tracked before 1973-74.</p>':'')+'</div>'+awardBoard(a,b);}
   if(!a.s||!b.s)return '<div class="stats"><span class="kicker">Rookie or new to the list</span><p class="note center">'+esc(!a.s?a.n+": "+a.note:b.n+": "+b.note)+'</p></div>';
   var big=bigPos(a)||bigPos(b),rows=[["PTS",1],["REB",2],["AST",3],big?["BLK",5]:["STL",4]];
-  return '<div class="stats"><span class="kicker">'+esc(CFG.statsLabel||"Last season")+' · per game</span>'+rows.map(function(r){
+  return '<div class="stats"><span class="kicker">'+esc(seasonLabel())+'</span>'+rows.map(function(r){
     var x=a.s[r[1]],y=b.s[r[1]],wa=x+y>0?Math.round(x/(x+y)*100):50,ax=x>y?" win":"",bx=y>x?" win":"";
     return '<div class="sr"><div class="l"><span class="tr"><b class="'+ax+'" style="width:'+wa+'%"></b></span><span class="v'+ax+'">'+f1(x)+'</span></div><span class="k">'+r[0]+'</span><div class="rr"><span class="v'+bx+'">'+f1(y)+'</span><span class="tr"><b class="'+bx+'" style="width:'+(100-wa)+'%"></b></span></div></div>';}).join("")+'</div>';
 }

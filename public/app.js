@@ -188,6 +188,8 @@ function moveHTML(prev,rank,hasPrev){
   if(d<0)return '<span class="mv down" aria-label="down '+(-d)+'">'+chev("down")+(-d)+'</span>';
   return '<span class="mv" aria-label="no change">–</span>';}
 function cutLine(){return '<div class="cut" aria-hidden="true"><span>▲ TOP 5</span></div>';}
+// Short stats label for the pick screen and player cards: just the season, e.g. "2026-27 season" (Settings keeps the full date).
+function seasonLabel(){return String(CFG.statsLabel||"Last season").replace(/\s*\(.*\)\s*$/,"");}
 function numCls(i){return "n"+(i<5?" t5":"");}
 function ghost(rk){return '<span class="ghost" aria-hidden="true">'+rk+'</span>';}
 function fmt(n){return Number(n||0).toLocaleString("en-US");}
@@ -263,7 +265,7 @@ function statsPanel(a,b,key){
       ((a.c.stl==null||b.c.stl==null)?'<p class="note center">— Steals and blocks weren\'t tracked before 1973-74.</p>':'')+'</div>'+awardBoard(a,b);}
   if(!a.s||!b.s)return '<div class="stats"><span class="kicker">Rookie or new to the list</span><p class="note center">'+esc(!a.s?a.n+": "+a.note:b.n+": "+b.note)+'</p></div>';
   var big=bigPos(a)||bigPos(b),rows=[["PTS",1],["REB",2],["AST",3],big?["BLK",5]:["STL",4]];
-  return '<div class="stats"><span class="kicker">'+esc(CFG.statsLabel||"Last season")+' · per game</span>'+rows.map(function(r){
+  return '<div class="stats"><span class="kicker">'+esc(seasonLabel())+'</span>'+rows.map(function(r){
     var x=a.s[r[1]],y=b.s[r[1]],wa=x+y>0?Math.round(x/(x+y)*100):50,ax=x>y?" win":"",bx=y>x?" win":"";
     return '<div class="sr"><div class="l"><span class="tr"><b class="'+ax+'" style="width:'+wa+'%"></b></span><span class="v'+ax+'">'+f1(x)+'</span></div><span class="k">'+r[0]+'</span><div class="rr"><span class="v'+bx+'">'+f1(y)+'</span><span class="tr"><b class="'+bx+'" style="width:'+(100-wa)+'%"></b></span></div></div>';}).join("")+'</div>';
 }
@@ -873,7 +875,7 @@ function playerCard(id){
   var mp=me.l[p.pos].indexOf(id),mo=me.l.overall.indexOf(id);
   var front='<div class="tc-top"><span class="tc-team">'+esc(p.t||"FA")+'</span><span class="tc-pos">'+POSL[p.pos]+'</span></div>'+
     '<h2 id="pc-t" class="pname">'+splitName(p.n)+'</h2>'+
-    (stats?'<div class="sts">'+stats.map(function(x){return '<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>';}).join("")+'</div><span class="tc-lab">'+esc(CFG.statsLabel||"Last regular season")+' · per game</span>':'<p class="sub">'+esc(p.note)+'</p>')+
+    (stats?'<div class="sts">'+stats.map(function(x){return '<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>';}).join("")+'</div><span class="tc-lab">'+esc(seasonLabel())+'</span>':'<p class="sub">'+esc(p.note)+'</p>')+
     '<div class="cells">'+fr("overall","FANS · OVERALL")+fr(p.pos,"FANS · "+POSL[p.pos])+'</div>';
   var back='<div class="tc-top"><span class="tc-team">'+esc(p.t||"FA")+'</span><span class="tc-pos">RANK HISTORY</span></div>'+
     '<h2 class="pname sm">'+splitName(p.n)+'</h2>'+historyHTML(id)+

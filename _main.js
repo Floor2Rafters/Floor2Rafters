@@ -372,7 +372,7 @@ function playerCard(id){
   var mp=me.l[p.pos].indexOf(id),mo=me.l.overall.indexOf(id);
   var front='<div class="tc-top"><span class="tc-team">'+esc(p.t||"FA")+'</span><span class="tc-pos">'+POSL[p.pos]+'</span></div>'+
     '<h2 id="pc-t" class="pname">'+splitName(p.n)+'</h2>'+
-    (stats?'<div class="sts">'+stats.map(function(x){return '<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>';}).join("")+'</div><span class="tc-lab">'+esc(CFG.statsLabel||"Last regular season")+' · per game</span>':'<p class="sub">'+esc(p.note)+'</p>')+
+    (stats?'<div class="sts">'+stats.map(function(x){return '<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>';}).join("")+'</div><span class="tc-lab">'+esc(seasonLabel())+'</span>':'<p class="sub">'+esc(p.note)+'</p>')+
     '<div class="cells">'+fr("overall","FANS · OVERALL")+fr(p.pos,"FANS · "+POSL[p.pos])+'</div>';
   var back='<div class="tc-top"><span class="tc-team">'+esc(p.t||"FA")+'</span><span class="tc-pos">RANK HISTORY</span></div>'+
     '<h2 class="pname sm">'+splitName(p.n)+'</h2>'+historyHTML(id)+
