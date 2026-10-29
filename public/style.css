@@ -874,3 +874,5 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 /* Board rows: all rank numbers white; top 5 keep a soft glow */
 .r .n,.r .n.t5{color:var(--white)}
 .r .n.t5{text-shadow:0 0 12px rgba(238,241,255,.45)}
+/* Board rows: plain white rank numbers, no glow */
+.r .n,.r .n.t5{color:var(--white);text-shadow:none}
