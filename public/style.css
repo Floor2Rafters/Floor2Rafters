@@ -845,3 +845,20 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 @media (max-width:759px){.hm-nav a,.hm-nav .btn{display:none}}
 /* tagline stays on one line, shrinking a little on narrow phones */
 .hm-copy .hm-sub,.welcome .sub{white-space:nowrap;font-size:min(18px,3.6vw)}
+
+/* Scoreboard, cleaned up (Oct 2026): hangs straight from the truss, running band inside the screen, lights below */
+.jt{padding-top:12px}
+.jt-truss{top:0}
+.jt-cable,.jt-crown,.jt-wing,.jt-ribbon{display:none!important}
+.jt-panel:not(.jt-col){padding:22px 16px 0!important;overflow:hidden}
+.jt-slot{gap:12px}
+.jt-top{font-size:12px;letter-spacing:.08em}
+.jt-big{font-size:88px}
+.jt-name{font-size:34px}
+.jt-name small{font-size:14px;margin-top:8px}
+.jt-row{gap:18px}
+.jt-dots{margin-top:12px}
+.jt-dots i{width:5px;height:5px}
+.jt .crawl{width:auto;align-self:stretch;margin:14px -14px 2px;border-top:1px solid var(--line);border-bottom:0;background-color:transparent}
+.jt{padding-top:18px}
+.jt-truss{left:6%;right:6%;height:16px;opacity:1;filter:brightness(1.6)}

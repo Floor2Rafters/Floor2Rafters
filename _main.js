@@ -148,7 +148,8 @@ function tickerItems(rows,hasPrev,voters){
   return out;}
 function tickerHTML(items){return '<div class="jt-tick">'+items.map(function(x){return '<span class="c-'+x[1]+'">'+esc(x[0])+'</span>';}).join("")+'</div>';}
 // D: the scoreboard hangs from the rafters above the board
-function jumboHTML(key,b,rows,hasPrev){
+// The running band (crawl) rides along the bottom of the scoreboard screen.
+function jumboHTML(key,b,rows,hasPrev,band){
   var voters=(b&&b.voters)||0,label=(key==="overall"?"OVERALL":POSL[key].toUpperCase())+" · ";
   var inner;
   if(!rows.length){
@@ -156,7 +157,7 @@ function jumboHTML(key,b,rows,hasPrev){
     return '<div class="jt" aria-label="Fan Board scoreboard">'+jtFrame('<div class="jt-panel jt-col">'+inner+'</div>')+'</div>';}
   var n=Math.min(10,rows.length);JT={key:key,rows:rows,voters:voters,label:label,when:"LIVE",i:0,n:n};JT.m=n;
   var dots='';for(var d=0;d<JT.m;d++)dots+='<i'+(d===0?' class="on"':'')+'></i>';
-  inner='<span class="jt-slot">'+jtSlot(0)+'</span>'+(JT.m>1?'<span class="jt-dots" aria-hidden="true">'+dots+'</span>':'')+tickerHTML(tickerItems(rows,hasPrev,voters));
+  inner='<span class="jt-slot">'+jtSlot(0)+'</span>'+(JT.m>1?'<span class="jt-dots" aria-hidden="true">'+dots+'</span>':'')+(band||'');
   return '<button class="jt" data-reveal="'+key+'" aria-label="Fan Board scoreboard, cycling through the fans\' top '+n+'. Tap for the full reveal">'+jtFrame('<div class="jt-panel">'+inner+'</div>')+'</button>';}
 // The scoreboard cycles through the fans' top 10 like an arena board: #1, #2, #3... every 4 seconds, then loops.
 var JT=null,jtTimer=null;
@@ -244,9 +245,8 @@ function fansBody(key){
   var b=boards[key],rows=b&&b.rows||[],voters=(b&&b.voters)||0,hasPrev=b&&b.prev;
   var h='<h1 class="sr-only">Fan Board</h1>';
   var off=offline()||(b&&(b.error||b.stale));
-  h=(b&&!b.loading&&!b.error&&!off?crawlHTML(key,b,rows,hasPrev,voters):"")+h;
   if(off)h+=noSignalHTML();
-  else if(b&&!b.loading&&!b.error)h+=jumboHTML(key,b,rows,hasPrev)+sponsorHTML(key);
+  else if(b&&!b.loading&&!b.error)h+=jumboHTML(key,b,rows,hasPrev,crawlHTML(key,b,rows,hasPrev,voters))+sponsorHTML(key);
   h+=deskSideHTML(key,b,rows,hasPrev);
   h+='<!--split-->';
   h+='<nav class="tabs" aria-label="Boards">'+TABS.map(function(t){return '<button class="tb'+(t[0]==="overall"?" ov":isGoat(t[0])?" gt":"")+'" data-tab="'+t[0]+'" aria-pressed="'+(t[0]===key)+'">'+(t[0]==="overall"?"OVERALL":isGoat(t[0])?"ALL-TIME":t[1])+'</button>';}).join("")+'</nav>';

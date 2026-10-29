@@ -118,7 +118,7 @@ const ids=[0,51,112,171,223,1,52,113,172,224,2,53];
 const board=ids.map((id,i)=>({week:'2026-10-12',prev_week:'2026-10-05',voters:37,rank:i+1,player_id:id,points:900-i*40,firsts:i<3?5-i:0,votes:20,prev_rank:i===0?2:i===1?1:i===5?null:i+1}));
 p=await page({players,boards:{overall:board},lists:[],state:null},cfg,true);
 ok('live board rows',(await p.$$eval('.list .r',r=>r.length))===12);
-ok('movement chevrons + jumbotron ticker',(await p.textContent('.jt-tick')).includes('▲')&&(await p.$$eval('.mv.down',r=>r.length))>0&&(await p.$$eval('.mv.new',r=>r.length))===1);
+ok('movement chevrons + jumbotron ticker',(await p.textContent('.jt .crawl')).includes('▲')&&(await p.$$eval('.mv.down',r=>r.length))>0&&(await p.$$eval('.mv.new',r=>r.length))===1);
 ok('signed-out header shows Sign in',!!(await p.$('.top [data-signin]')));
 await p.click('[data-nav=pick]');for(let i=0;i<5;i++)await p.click('.pc[data-side=b]');
 ok('sign-in nudge while picking',!!(await p.$('.nudge')));
