@@ -864,3 +864,10 @@ body.throwback::before{content:"";position:fixed;inset:0;z-index:4;pointer-event
 .jt-truss{left:6%;right:6%;height:16px;opacity:1;filter:brightness(1.6)}
 .jt-truss{display:none!important}
 .jt{padding-top:6px}
+/* Board rows: faded rank number pushed to the right edge, cut off by the row, so it never covers text */
+.r{overflow:hidden}
+.r .ghost,.r .ghost{right:-6px;top:56%;font-size:96px;opacity:.09}
+@media (max-width:9999px){.r .ghost{right:-6px}}
+/* Board rows: rank numbers pop: bigger, top 5 glow */
+.r .n{font-size:34px;width:42px;line-height:1}
+.r .n.t5{color:var(--blue);text-shadow:0 0 14px rgba(61,225,255,.65)}
